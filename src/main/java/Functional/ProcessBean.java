@@ -31,9 +31,6 @@ public class ProcessBean implements Serializable {
     @ManagedProperty(value = "#{hitService}")
     private HitService service;
 
-    @ManagedProperty(value = "#{counterBean}")
-    private CounterBean counter;
-
     public ProcessBean() {
 
     }
@@ -47,9 +44,6 @@ public class ProcessBean implements Serializable {
         CachedResultable<Boolean> hitCached = new CachedResultable<>(hit);
         Timer timer = new Timer(hitCached);
         LocalDateTime dateTime = LocalDateTime.now();
-
-        if (hit.result()) counter.addHit();
-        else counter.addMiss();
 
         service.create(new DataBaseHit(this.r.getValue(),
                 this.x.getValue(),
@@ -97,13 +91,5 @@ public class ProcessBean implements Serializable {
 
     public void setY(YInputTextBean y) {
         this.y = y;
-    }
-
-    public void setCounter(CounterBean counter) {
-        this.counter = counter;
-    }
-
-    public CounterBean getCounter() {
-        return counter;
     }
 }
