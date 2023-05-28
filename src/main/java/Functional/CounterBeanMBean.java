@@ -6,6 +6,4 @@ public interface CounterBeanMBean {
     int getAllCounter();
 
     int getHitCounter();
-
-    String getMessage();
 }

@@ -16,7 +16,7 @@ import java.lang.management.ManagementFactory;
 
 @ManagedBean
 @SessionScoped
-public class CounterBean implements CounterBeanMBean {
+public class CounterBean extends NotificationBroadcasterSupport implements CounterBeanMBean {
     @ManagedProperty(value = "#{radiusButtonsBean}")
     private RadiusButtonsBean r;
 
@@ -28,7 +28,7 @@ public class CounterBean implements CounterBeanMBean {
     private int allCounter = 0;
     private int hitCounter = 0;
 
-    private String message;
+    private long sequenceNumber = 0;
 
     public CounterBean() {
         try {
@@ -52,21 +52,17 @@ public class CounterBean implements CounterBeanMBean {
 
         Hit hit = new Hit(x, y, r);
 
-        if (hit.result()) addHit();
-        else addMiss();
+        if (hit.result()) {
+            allCounter++;
+            hitCounter++;
+        } else allCounter++;
 
-        this.message = 1 / 0.935 * r.content() > Math.abs(x.content()) && 1 / 0.935 * r.content() > Math.abs(y.content()) ?
-                "" : "При указанном радиусе (" + (int) r.content().floatValue() + ") последняя введённая точка" +
-                " (" + x.content() + ";" + y.content() + ") не попадает в область отрисовки";
-    }
+        if (!(1 / 0.935 * r.content() > Math.abs(x.content()) && 1 / 0.935 * r.content() > Math.abs(y.content()))) {
+            Notification n = new Notification("warning", this,
+                    sequenceNumber++, System.currentTimeMillis(), "point goes beyond the rendering area");
 
-    private void addHit() {
-        allCounter++;
-        hitCounter++;
-    }
-
-    private void addMiss() {
-        allCounter++;
+            sendNotification(n);
+        }
     }
 
     public int getAllCounter() {
@@ -99,9 +95,5 @@ public class CounterBean implements CounterBeanMBean {
 
     public void setY(YInputTextBean y) {
         this.y = y;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }

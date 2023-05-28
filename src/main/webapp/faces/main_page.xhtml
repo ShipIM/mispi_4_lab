@@ -307,7 +307,7 @@
                                                  styleClass="send" disabled="false" id="formSendButton">
                                     <f:actionListener binding="#{counterBean.process()}"/>
                                     <p:ajax process="fields_form"
-                                            update="fields_form content_table all_counter hit_counter warning click"
+                                            update="fields_form content_table all_counter hit_counter click"
                                             oncomplete="loadPicture()"/>
                                 </h:commandButton>
                             </td>
@@ -324,7 +324,7 @@
                         <f:actionListener binding="#{counterBean.process()}"/>
                         <f:actionListener binding="#{timerBean.process()}"/>
                         <p:ajax process="hidden_fields_form"
-                                update="fields_form content_table hit_counter all_counter warning click"
+                                update="fields_form content_table hit_counter all_counter click"
                                 oncomplete="loadPicture()"/>
                     </h:commandButton>
                 </h:form>
@@ -337,8 +337,6 @@
                 <br/>
                 <h:outputText id="hit_counter"
                               value="Количество зафиксированных попаданий за текущую сессию: #{counterBean.hitCounter}"/>
-                <br/>
-                <h:outputText styleClass="error" id="warning" value="${counterBean.message}"/>
                 <br/>
                 <h:outputText id="click"
                               value="Средний интервал между кликами пользователя по координатной оси: #{timerBean.average}"/>
