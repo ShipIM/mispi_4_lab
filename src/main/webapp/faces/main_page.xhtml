@@ -54,6 +54,10 @@
             padding-right: 3%;
         }
 
+        .padding {
+            padding: 3% 3% 3% 3%;
+        }
+
         ul, ol {
             padding-right: 3%;
             padding-left: 7%;
@@ -332,13 +336,13 @@
         </tr>
         <tr>
             <td>
-                <h:outputText id="all_counter"
+                <h:outputText id="all_counter" styleClass="padding"
                               value="Общее количество зафиксированных точек за текущую сессию: #{counterBean.allCounter}"/>
                 <br/>
-                <h:outputText id="hit_counter"
+                <h:outputText id="hit_counter" styleClass="padding"
                               value="Количество зафиксированных попаданий за текущую сессию: #{counterBean.hitCounter}"/>
                 <br/>
-                <h:outputText id="click"
+                <h:outputText id="click" styleClass="padding"
                               value="Средний интервал между кликами пользователя по координатной оси: #{timerBean.average}"/>
             </td>
         </tr>
